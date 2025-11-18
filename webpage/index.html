@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bluetooth PAN File Transfer — Project</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa7bd;--accent:#4f46e5;--accent2:#06b6d4;color-scheme:dark}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071029 0%,#08121a 100%);color:#e6eef8}
+    .wrap{max-width:980px;margin:48px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:24px}
+    p.lead{color:var(--muted);margin:8px 0 20px}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    pre{background:#031024;padding:12px;border-radius:8px;overflow:auto;color:#d6eaff}
+    a.button{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+    .meta{font-size:13px;color:var(--muted)}
+    ul{margin:8px 0 8px 20px}
+    .kbd{background:#081029;border:1px solid rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:monospace}
+    footer{margin-top:24px;color:var(--muted);font-size:13px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">BP</div>
+      <div>
+        <h1>Bluetooth PAN File Transfer &amp; Automated Typing</h1>
+        <p class="lead">A lightweight network utility: Phone (Termux) → Laptop (C++ receiver). Reliable framing, atomic saves, hotkey-triggered typing.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Quick Overview</h2>
+        <p class="meta">Language: <strong>C++</strong> (receiver) + <strong>Python</strong> (Termux sender) • Platform: Windows + Android (Termux) • Transport: Bluetooth PAN (TCP)</p>
+
+        <h3>What it does</h3>
+        <ul>
+          <li>Phone sends file over TCP (Bluetooth PAN) to laptop.</li>
+          <li>Receiver saves payload safely and confirms with ACK.</li>
+          <li>Press <span class="kbd">7 + 8 + 9</span> on laptop to type received text into focused app.</li>
+        </ul>
+
+        <h3>Protocol</h3>
+        <p class="meta">Framing: <code>4-byte big-endian length</code> + payload. Optional 1-byte ACK (0x01).</p>
+
+        <h3>How to build &amp; run</h3>
+        <p><strong>Compile on Windows (MinGW):</strong></p>
+        <pre>g++ -std=c++17 receiver_win32_fixed.cpp -o receiver.exe -lws2_32</pre>
+        <p><strong>Run receiver:</strong></p>
+        <pre>.\receiver.exe --port 5001 --out "C:\\Users\\YOU\\Desktop\\received_data.txt"</pre>
+        <p><strong>Run Termux sender (on phone):</strong></p>
+        <pre>python3 cn_project_sender.py</pre>
+
+        <h3>Files included</h3>
+        <ul>
+          <li><strong>receiver_win32_fixed.cpp</strong> — C++ receiver (commented)</li>
+          <li><strong>cn_project_sender.py</strong> — Python sender for Termux</li>
+          <li><strong>project_report.pdf</strong> — Project report</li>
+          <li><strong>demo_video.mp4</strong> — 5 minute demo</li>
+        </ul>
+
+        <h3>Notes</h3>
+        <ul>
+          <li>Ensure Bluetooth PAN is active and phone &amp; laptop are on same network (e.g., 192.168.44.x).</li>
+          <li>Set <code>SERVER_IP</code> in the sender to the laptop's Bluetooth IPv4 address.</li>
+        </ul>
+      </div>
+
+      <aside class="card">
+        <h3>Quick links</h3>
+        <p><a class="button" id="demoBtn" href="">Open Demo Video</a></p>
+        <p style="margin-top:12px"><a class="button" id="codeBtn" href="#">Source Folder having everything</a></p>
+        <p style="margin-top:12px"><a class="button" id="reportBtn" href="#">Open Project Report (PDF)</a></p>
+
+        <h4 style="margin-top:18px">Repository</h4>
+        <p class="meta"> GitHub link: <a id="ghlink" href="#">Github Link</a></p>
+
+        <h4 style="margin-top:12px">Contact</h4>
+        <p class="meta">Prepared by: Daksh Arora,2023178,Group 36 — IIITD</p>
+      </aside>
+    </div>
+
+    <footer>
+    </footer>
+  </div>
+
+  <script>
+    const DEMO_URL = "https://drive.google.com/file/d/18c7uhQi63JKznaBiqNHEBbVW5txS5c-t/view?usp=sharing";
+    const ZIP_URL  = "https://drive.google.com/drive/folders/1ZzWWCeLCJZ66bLSgcocgKb00b7SADZGA?usp=sharing";
+    const REPORT_URL = "https://drive.google.com/file/d/1EJAOFDR75azdBSiynyoAjjrZeowReQ9T/view?usp=sharing";
+    const GH_URL = "https://github.com/DakshArora31415926535/cn_project_main.git";
+
+    document.getElementById('demoBtn').href = DEMO_URL;
+    document.getElementById('codeBtn').href = ZIP_URL;
+    document.getElementById('reportBtn').href = REPORT_URL;
+    document.getElementById('ghlink').href = GH_URL;
+  </script>
+</body>
+</html>
